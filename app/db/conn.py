@@ -16,3 +16,11 @@ Database_url = f"mysql+aiomysql://{user}:{password}@{host}:{port}/{db}"
 engine = create_async_engine(Database_url, echo=True)
 Base = declarative_base()
 SessionLocal = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
+
+
+async def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        await db.close()
