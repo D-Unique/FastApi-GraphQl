@@ -1,12 +1,14 @@
 from pydantic import BaseModel, SecretStr, EmailStr, field_validator
 from datetime import datetime
+from typing import Literal
 
 class UserBase(BaseModel):
     """Pydentic typing for the User Endpoint """
     name: str
     email: str
     password: SecretStr
-
+    user_type: Literal["Customer", "Admin", "Manager"]
+    
     @field_validator("name")
     def validate_name(cls, value):
         if value is None:
